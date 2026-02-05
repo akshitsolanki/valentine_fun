@@ -7,7 +7,7 @@ const normalizeBase = (base, fallback) => {
   return value;
 };
 const APP_IMAGES_BASE = normalizeBase(APP_CONFIG.imagesBase, '/images/');
-const APP_SEND_AGREEMENT_URL = (APP_CONFIG.api && APP_CONFIG.api.sendAgreement) || '/send-agreement';
+const APP_SEND_AGREEMENT_URL = (APP_CONFIG.api && APP_CONFIG.api.sendAgreement) || '/.netlify/functions/agreement';
 const mediaSrc = (key, fallback) => APP_MEDIA[key] || fallback;
 const DEFAULT_NAMES = { a: 'Akshit', b: 'Aarzu' };
 const APP_NAMES = {

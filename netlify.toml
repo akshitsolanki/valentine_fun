@@ -6,3 +6,13 @@
 
 [functions.agreement]
   timeout = 26
+
+[[redirects]]
+  from = "/send-agreement"
+  to = "/.netlify/functions/agreement"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
