@@ -13,6 +13,51 @@
   status = 200
 
 [[redirects]]
+  from = "/home"
+  to = "/home/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/rose"
+  to = "/day.html?day=rose"
+  status = 200
+
+[[redirects]]
+  from = "/propose"
+  to = "/day.html?day=propose"
+  status = 200
+
+[[redirects]]
+  from = "/chocolate"
+  to = "/day.html?day=chocolate"
+  status = 200
+
+[[redirects]]
+  from = "/teddy"
+  to = "/day.html?day=teddy"
+  status = 200
+
+[[redirects]]
+  from = "/promise"
+  to = "/day.html?day=promise"
+  status = 200
+
+[[redirects]]
+  from = "/hug"
+  to = "/day.html?day=hug"
+  status = 200
+
+[[redirects]]
+  from = "/kiss"
+  to = "/day.html?day=kiss"
+  status = 200
+
+[[redirects]]
+  from = "/valentine"
+  to = "/day.html?day=valentine"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
