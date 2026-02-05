@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine Day</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="day-page">
+  <div class="day-bg" aria-hidden="true"></div>
+  <div class="day-spotlight" aria-hidden="true"></div>
+  <div id="day-fx" class="day-fx" aria-hidden="true"></div>
+
+  <main class="day-shell">
+    <header class="day-hero">
+      <div class="day-hero-text">
+        <div id="day-badge" class="day-badge">?? Valentine Day ??</div>
+        <h1 class="day-title">A little chapter for you</h1>
+        <p id="day-message" class="day-subtitle">Today feels softer because it’s you.</p>
+        <div class="day-actions">
+          <a href="/home" class="day-back">Back to Home</a>
+        </div>
+      </div>
+      <div class="day-hero-media">
+        <div class="day-slider" data-slider>
+          <div id="day-slides"></div>
+          <div id="day-caption" class="day-caption"></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="day-grid">
+      <article class="day-card deluxe love-card">
+        <h2 class="day-card-title">Love Letter</h2>
+        <div id="day-poem" class="day-poem"></div>
+      </article>
+
+      <article class="day-card mood-card">
+        <h2 class="day-card-title">Today’s Mood</h2>
+        <p id="day-mood" class="day-mood"></p>
+        <div id="day-tags" class="day-tags"></div>
+      </article>
+
+      <article class="day-card distance-card">
+        <h2 class="day-card-title">Love Notes</h2>
+        <div class="distance-lines">
+          <span id="day-note"></span>
+        </div>
+      </article>
+
+      <article class="day-card countdown-card">
+        <h2 class="day-card-title">Countdown to Meet</h2>
+        <p class="countdown-date">Meeting on Feb 26, 2026</p>
+        <div id="meet-countdown" class="countdown-grid">
+          <div><strong>--</strong><span>Days</span></div>
+          <div><strong>--</strong><span>Hours</span></div>
+          <div><strong>--</strong><span>Minutes</span></div>
+          <div><strong>--</strong><span>Seconds</span></div>
+        </div>
+      </article>
+
+      <article class="day-card day-surprise surprise-card">
+        <h2 class="day-card-title">Tiny Surprise</h2>
+        <p id="day-surprise-text"></p>
+        <button id="day-surprise-btn" class="day-trigger" data-reveal="surprise"></button>
+        <div id="day-surprise-reveal" class="day-reveal" data-reveal-target="surprise"></div>
+      </article>
+
+      <article class="day-card secret-card secret-card-block">
+        <h2 class="day-card-title">Secret Note</h2>
+        <p class="secret-hint">Tap to reveal what I never say out loud.</p>
+        <button class="day-trigger secret-trigger" data-reveal="secret">Reveal</button>
+        <div id="day-secret" class="day-reveal" data-reveal-target="secret"></div>
+      </article>
+    </section>
+  </main>
+
+  <div id="floating-hearts" class="floating-layer" aria-hidden="true"></div>
+  <audio id="day-music" loop autoplay></audio>
+
+  <script>
+    const QUOTES = [
+      'You are my everything.',
+      'Every day with you is a blessing.',
+      'Love you more than words can say.',
+      'Forever and always.',
+      'My heart beats for you.'
+    ];
+
+    const DAYS = {
+      rose: {
+        name: 'Rose Day',
+        emoji: '??',
+        message: 'A rose for my love, as beautiful as you are.',
+        images: ['/images/1.jpg', '/images/2.jpg'],
+        poem: `
+          <p>In gardens of dreams, where roses softly bloom,<br>
+          I found a flower that chased away my gloom.<br>
+          With petals so red, like the love in your eyes,<br>
+          You are my rose, my eternal surprise.<br>
+          Each thorn reminds me of challenges we've faced,<br>
+          But your beauty makes every struggle erased.</p>
+        `,
+        tags: ['Petals', 'Blush', 'Warmth'],
+        note: '“A rose for you, carried by my words.”',
+        surprise: { text: 'Pick a rose to see what it whispers.', btn: 'Pick a Rose', reveal: 'You are the flower my heart kept searching for.' },
+        secret: 'You make even ordinary days feel soft and romantic.'
+      },
+      propose: {
+        name: 'Propose Day',
+        emoji: '??',
+        message: 'Will you be mine forever?',
+        images: ['/images/3.jpg', '/images/4.jpg'],
+        poem: `
+          <p>Under starry skies, where wishes take flight,<br>
+          I kneel before you, my heart's pure delight.<br>
+          Will you be mine, in joy and in sorrow,<br>
+          Together forever, from now until tomorrow?<br>
+          Your smile lights my world, your touch sets me free,<br>
+          Say yes, my love, and complete you and me.</p>
+        `,
+        tags: ['Starlight', 'Promise', 'Forever'],
+        note: '“Will you be mine, across every timezone?”',
+        surprise: { text: 'Open the ring box.', btn: 'Open the Box', reveal: 'Say yes, and let’s write forever together.' },
+        secret: 'I would choose you in every lifetime, without hesitation.'
+      },
+      chocolate: {
+        name: 'Chocolate Day',
+        emoji: '??',
+        message: 'Sweet as chocolate, that’s you!',
+        images: ['/images/5.jpg', '/images/6.jpg'],
+        poem: `
+          <p>Sweet as the finest chocolate, rich and divine,<br>
+          Your love melts my heart, makes everything shine.<br>
+          In every bite, I taste your gentle grace,<br>
+          Wrapped in your warmth, in this loving embrace.<br>
+          Like cocoa beans grown in tropical sun,
+          You are my sweetness, my only one.</p>
+        `,
+        tags: ['Cocoa', 'Sweet', 'Velvet'],
+        note: '“Sweet notes, sweeter than chocolate.”',
+        surprise: { text: 'Unwrap the chocolate.', btn: 'Unwrap', reveal: 'Sweet like you, soft like us.' },
+        secret: 'You are my comfort, my sweetness, my calm.'
+      },
+      teddy: {
+        name: 'Teddy Day',
+        emoji: '??',
+        message: 'Cuddly like a teddy, but better.',
+        images: ['/images/7.jpg', '/images/8.jpg'],
+        poem: `
+          <p>Soft as a teddy, with eyes full of care,<br>
+          You hold me close, banishing despair.<br>
+          In your arms, I find my safest place,
+          A cuddly haven, filled with your grace.<br>
+          Like a cherished bear, you comfort and soothe,
+          My teddy bear love, forever my truth.</p>
+        `,
+        tags: ['Cozy', 'Soft', 'Cuddle'],
+        note: '“Soft hugs sent through the screen.”',
+        surprise: { text: 'Tap the teddy’s heart.', btn: 'Tap Heart', reveal: 'A cuddle from me, anytime you want.' },
+        secret: 'You feel like home — warm, safe, and gentle.'
+      },
+      promise: {
+        name: 'Promise Day',
+        emoji: '??',
+        message: 'I promise to love you always.',
+        images: ['/images/9.jpg', '/images/10.jpg'],
+        poem: `
+          <p>With hands held tight, and hearts beating as one,
+          I promise you forever, until the setting sun.<br>
+          Through storms and sunshine, I'll stand by your side,
+          My word is my bond, in you I confide.<br>
+          Eternal commitment, in sickness and health,
+          You are my promise, my infinite wealth.</p>
+        `,
+        tags: ['Gold', 'Trust', 'Bloom'],
+        note: '“I promise to keep choosing you.”',
+        surprise: { text: 'Sign our promise.', btn: 'Seal Promise', reveal: 'I’ll choose you, every single day.' },
+        secret: 'I promise to keep showing up for you, always.'
+      },
+      hug: {
+        name: 'Hug Day',
+        emoji: '??',
+        message: 'Hugs from me to you, forever.',
+        images: ['/images/11.jpg', '/images/12.jpg'],
+        poem: `
+          <p>Wrapped in your arms, where worries dissolve,
+          Your hugs are my haven, my problems resolve.<br>
+          Warmth of your touch, like a blanket so fine,
+          In your embrace, everything feels divine.<br>
+          Each squeeze whispers love, in a language so true,
+          My hug day darling, I cherish you.</p>
+        `,
+        tags: ['Warm', 'Safe', 'Hold'],
+        note: '“A hug in every ‘good morning.’”',
+        surprise: { text: 'Hold for a hug.', btn: 'Hold Me', reveal: 'Here’s a warm hug, wrapped in words.' },
+        secret: 'I feel safest when I’m close to you.'
+      },
+      kiss: {
+        name: 'Kiss Day',
+        emoji: '??',
+        message: 'A kiss to seal our love.',
+        images: ['/images/13.jpg', '/images/14.jpg'],
+        poem: `
+          <p>Lips softly meeting, in a dance so divine,
+          Your kiss is my nectar, my sweetest wine.<br>
+          Sparks fly like fireworks, in the night sky so grand,
+          With every touch, I understand.<br>
+          Passion ignited, in this tender art,
+          You are my kiss, my beating heart.</p>
+        `,
+        tags: ['Spark', 'Glow', 'Sway'],
+        note: '“A kiss in every ‘good night.’”',
+        surprise: { text: 'Steal a kiss.', btn: 'Steal', reveal: 'A kiss for your forehead, soft and safe.' },
+        secret: 'Your smile stays with me long after we part.'
+      },
+      valentine: {
+        name: "Valentine's Day",
+        emoji: '??',
+        message: "Happy Valentine's Day, my love!",
+        images: ['/images/15.jpg', '/images/16.jpg'],
+        poem: `
+          <p>On this day of hearts, when love fills the air,
+          I celebrate you, beyond compare.<br>
+          My Valentine forever, my joy and my light,
+          In your love, everything feels right.<br>
+          Through all the years, my love will remain,
+          Happy Valentine's, my eternal flame.</p>
+        `,
+        tags: ['Finale', 'Fireworks', 'Us'],
+        note: '“Love travels faster than distance.”',
+        surprise: { text: 'Pop the finale.', btn: 'Celebrate', reveal: "You’re my forever favorite. Happy Valentine’s." },
+        secret: 'You are my favorite story, and my forever.'
+      }
+    };
+
+    const getDayKey = () => {
+      const params = new URLSearchParams(window.location.search);
+      const fromQuery = params.get('day');
+      if (fromQuery && DAYS[fromQuery]) return fromQuery;
+      const path = window.location.pathname.replace(/^\/+/, '').split('/')[0];
+      if (DAYS[path]) return path;
+      return 'valentine';
+    };
+
+    const dayKey = getDayKey();
+    const day = DAYS[dayKey];
+
+    document.title = `${day.name} - Valentine Week`;
+    document.body.classList.add(`day-${dayKey}`);
+
+    document.getElementById('day-badge').textContent = `${day.emoji} ${day.name} ${day.emoji}`;
+    document.getElementById('day-message').textContent = day.message;
+    document.getElementById('day-poem').innerHTML = day.poem;
+
+    const moodQuote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    document.getElementById('day-mood').textContent = `“${moodQuote}”`;
+
+    const tagsEl = document.getElementById('day-tags');
+    day.tags.forEach(tag => {
+      const span = document.createElement('span');
+      span.className = 'tag';
+      span.textContent = tag;
+      tagsEl.appendChild(span);
+    });
+
+    document.getElementById('day-note').textContent = day.note;
+
+    document.getElementById('day-surprise-text').textContent = day.surprise.text;
+    const surpriseBtn = document.getElementById('day-surprise-btn');
+    surpriseBtn.textContent = day.surprise.btn;
+    document.getElementById('day-surprise-reveal').textContent = day.surprise.reveal;
+    document.getElementById('day-secret').textContent = day.secret;
+
+    const slidesRoot = document.getElementById('day-slides');
+    day.images.forEach((src, i) => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = `${day.name} memory ${i + 1}`;
+      img.className = `day-slide${i === 0 ? ' active' : ''}`;
+      slidesRoot.appendChild(img);
+    });
+    document.getElementById('day-caption').textContent = `${day.name} — captured with love`;
+
+    const music = document.getElementById('day-music');
+    music.src = `/music/${dayKey === 'valentine' ? 'valentines' : dayKey}_day.mp3`;
+    music.play().catch(() => {
+      const resumeOnClick = () => {
+        music.play().catch(() => {});
+        document.removeEventListener('click', resumeOnClick);
+      };
+      document.addEventListener('click', resumeOnClick);
+    });
+
+    const playTone = (type) => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = ctx.currentTime;
+        const o1 = ctx.createOscillator();
+        const g = ctx.createGain();
+        const presets = {
+          rose: 330,
+          propose: 440,
+          chocolate: 280,
+          teddy: 300,
+          promise: 392,
+          hug: 320,
+          kiss: 520,
+          valentine: 660
+        };
+        o1.type = 'sine';
+        o1.frequency.value = presets[type] || 440;
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.09, now + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+        o1.connect(g);
+        g.connect(ctx.destination);
+        o1.start(now);
+        o1.stop(now + 0.55);
+        setTimeout(() => ctx.close(), 700);
+      } catch (e) {}
+    };
+
+    const triggers = document.querySelectorAll('.day-trigger');
+    triggers.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-reveal');
+        const target = document.querySelector(`[data-reveal-target="${key}"]`);
+        if (target) {
+          target.classList.toggle('show');
+          playTone(dayKey);
+        }
+      });
+    });
+
+    const fxRoot = document.getElementById('day-fx');
+    const spawnFx = (icon, className) => {
+      if (!fxRoot) return;
+      const el = document.createElement('div');
+      el.className = `fx-item ${className}`;
+      el.textContent = icon;
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (4 + Math.random() * 4) + 's';
+      fxRoot.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    };
+
+    const fxMap = {
+      rose: { icon: '??', className: 'fx-petal' },
+      propose: { icon: '?', className: 'fx-star' },
+      chocolate: { icon: '??', className: 'fx-drop' },
+      teddy: { icon: '??', className: 'fx-float' },
+      promise: { icon: '??', className: 'fx-gold' },
+      hug: { icon: '??', className: 'fx-soft' },
+      kiss: { icon: '??', className: 'fx-spark' },
+      valentine: { icon: '??', className: 'fx-fire' }
+    };
+
+    const fxConfig = fxMap[dayKey];
+    if (fxConfig) {
+      setInterval(() => spawnFx(fxConfig.icon, fxConfig.className), 1200);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '??';
+      heart.className = 'floating-heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.getElementById('floating-hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 1500);
+
+    const slides = document.querySelectorAll('.day-slide');
+    if (slides.length > 1) {
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3200);
+    }
+
+    const meetDate = new Date('2026-02-26T00:00:00');
+    const countdownEl = document.getElementById('meet-countdown');
+    if (countdownEl) {
+      const updateCountdown = () => {
+        const now = new Date();
+        const diff = meetDate - now;
+        if (diff <= 0) {
+          countdownEl.innerHTML = '<div><strong>0</strong><span>Days</span></div><div><strong>0</strong><span>Hours</span></div><div><strong>0</strong><span>Minutes</span></div><div><strong>0</strong><span>Seconds</span></div>';
+          return;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        countdownEl.innerHTML = `
+          <div><strong>${days}</strong><span>Days</span></div>
+          <div><strong>${hours}</strong><span>Hours</span></div>
+          <div><strong>${minutes}</strong><span>Minutes</span></div>
+          <div><strong>${seconds}</strong><span>Seconds</span></div>
+        `;
+      };
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  </script>
+</body>
+</html>
