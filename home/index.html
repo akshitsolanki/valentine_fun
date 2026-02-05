@@ -16,6 +16,7 @@
         <div id="unlock-progress" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
       </div>
       <p id="unlock-count" class="text-secondary">Day 0 of 8 unlocked</p>
+      <div id="admin-badge" class="badge bg-danger d-none">Admin Mode</div>
     </div>
 
     <div class="row g-4 justify-content-center" id="days-grid">
@@ -26,6 +27,7 @@
             <h5 class="card-title text-danger fw-bold">Rose Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 7, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/rose">Enter ❤️</a>
           </div>
         </div>
@@ -37,6 +39,7 @@
             <h5 class="card-title text-danger fw-bold">Propose Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 8, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/propose">Enter ❤️</a>
           </div>
         </div>
@@ -48,6 +51,7 @@
             <h5 class="card-title text-danger fw-bold">Chocolate Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 9, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/chocolate">Enter ❤️</a>
           </div>
         </div>
@@ -59,6 +63,7 @@
             <h5 class="card-title text-danger fw-bold">Teddy Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 10, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/teddy">Enter ❤️</a>
           </div>
         </div>
@@ -70,6 +75,7 @@
             <h5 class="card-title text-danger fw-bold">Promise Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 11, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/promise">Enter ❤️</a>
           </div>
         </div>
@@ -81,6 +87,7 @@
             <h5 class="card-title text-danger fw-bold">Hug Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 12, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/hug">Enter ❤️</a>
           </div>
         </div>
@@ -92,6 +99,7 @@
             <h5 class="card-title text-danger fw-bold">Kiss Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 13, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/kiss">Enter ❤️</a>
           </div>
         </div>
@@ -103,6 +111,7 @@
             <h5 class="card-title text-danger fw-bold">Valentine's Day</h5>
             <div class="lock-state text-muted fs-1">🔒</div>
             <div class="unlock-label small text-muted mt-2">Unlocks on Feb 14, 2026</div>
+            <div class="unlock-countdown small text-muted mt-1">Opens in --</div>
             <a class="btn btn-danger btn-lg mt-3 day-link" data-href="/valentine">Enter ❤️</a>
           </div>
         </div>
@@ -125,27 +134,49 @@
     setInterval(createHeart, 2000);
 
     function updateUnlocks() {
+      const params = new URLSearchParams(window.location.search);
+      const isAdmin = params.get('admin') === '5238';
+      const adminBadge = document.getElementById('admin-badge');
+      if (isAdmin) {
+        adminBadge.classList.remove('d-none');
+      }
+
       const cards = document.querySelectorAll('[data-day]');
       const now = new Date();
       let unlockedCount = 0;
 
       cards.forEach(card => {
         const unlockDate = new Date(card.getAttribute('data-unlock'));
-        const isUnlocked = now >= unlockDate;
+        const isUnlocked = isAdmin || now >= unlockDate;
         const lockState = card.querySelector('.lock-state');
         const label = card.querySelector('.unlock-label');
+        const countdown = card.querySelector('.unlock-countdown');
         const link = card.querySelector('.day-link');
         const href = link.getAttribute('data-href');
 
         if (isUnlocked) {
           unlockedCount += 1;
           lockState.textContent = '';
-          label.textContent = 'Unlocked';
+          label.textContent = isAdmin ? 'Unlocked (Admin)' : 'Unlocked';
+          if (countdown) countdown.textContent = '';
           link.setAttribute('href', href);
           link.classList.remove('disabled');
         } else {
           link.removeAttribute('href');
           link.classList.add('disabled');
+          if (countdown) {
+            const diff = unlockDate - now;
+            if (diff <= 0) {
+              countdown.textContent = 'Unlocked!';
+            } else {
+              const totalSeconds = Math.floor(diff / 1000);
+              const days = Math.floor(totalSeconds / 86400);
+              const hours = Math.floor((totalSeconds % 86400) / 3600);
+              const minutes = Math.floor((totalSeconds % 3600) / 60);
+              const seconds = totalSeconds % 60;
+              countdown.textContent = `Opens in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+          }
         }
       });
 
@@ -157,7 +188,7 @@
     }
 
     updateUnlocks();
-    setInterval(updateUnlocks, 60000);
+    setInterval(updateUnlocks, 1000);
   </script>
   <style>
     @keyframes floatUp {
