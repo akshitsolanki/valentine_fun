@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Perfect 😎 — Valentine</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="welcome-overlay" class="welcome-overlay">
+    <div class="welcome-content">
+      <div class="heart-icon">💖</div>
+      <p>I have something to ask you...</p>
+      <button id="open-btn">NEXT</button>
+    </div>
+  </div>
+  <div id="hearts-bg" aria-hidden="true"></div>
+  <div id="sparkles-bg" aria-hidden="true"></div>
+  <div id="flowers-bg" aria-hidden="true"></div>
+  <div class="container">
+    <div id="video-container" class="video-container">
+      <video id="cat-video" autoplay muted loop playsinline>
+        <source src="cat_pleasing.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <h1 id="main-title">💖 Will you be my Valentine? 💖</h1>
+    <p class="subtitle">🌸 You mean the world to me 🌸</p>
+    <div id="crying-message" class="crying-message hidden">"Am I that bad for you?? 😿"</div>
+    <div class="buttons">
+      <button id="yes" class="yes">YES 💍</button>
+      <button id="no" class="no">NO 😢</button>
+    </div>
+    <div id="love-message" class="love-message hidden">
+      <p>💌 My dearest, every moment with you is a treasure. You light up my life like stars in the night sky. I love you endlessly! 💕</p>
+      <div id="heart-quote" class="quote">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</div>
+    </div>
+    <div id="slideshow" class="slideshow hidden">
+      <!-- Slides will be injected by script.js -->
+    </div>
+
+    <div id="extra-features" class="hidden">
+      <button id="show-reasons" class="special-btn">Why I love you... 💖</button>
+      <button id="show-letter" class="special-btn">A Secret Letter 📝</button>
+    </div>
+
+    <div id="reasons-modal" class="modal hidden">
+      <div class="modal-content">
+        <button id="reasons-close" class="modal-close" aria-label="Close">&times;</button>
+        <h2>10 Reasons Why... 💌</h2>
+        <div class="reasons-grid" id="reasons-grid"></div>
+      </div>
+    </div>
+
+    <div id="letter-modal" class="modal hidden">
+      <div class="modal-content">
+        <button id="letter-close" class="modal-close" aria-label="Close">&times;</button>
+        <div class="letter-wrapper">
+          <div class="envelope" id="letter-envelope">
+            <div class="flap"></div>
+            <button id="letter-open-btn" class="letter-open-btn">Click me</button>
+          </div>
+        </div>
+        <div id="letter-text" class="letter-text hidden">
+          <p>To my favorite human,</p>
+          <p>You are the reason my world feels so bright. From the way you talk to the way you make me feel safe, everything about you is perfect to me.</p>
+          <p>I promise to always be by your side, whether we are laughing at silly jokes or walking through hard times. You are my forever Valentine.</p>
+          <p>With all my love, <br> Forever Yours ❤️</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <audio id="bg-music" src="main.mp3" loop autoplay></audio>
+  <div id="confetti" aria-hidden="true"></div>
+  <div id="cursor-trail-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>
