@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Locked - Valentine Week</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-lg border-0">
+          <div class="card-body text-center p-5">
+            <div class="mb-4">
+              <div class="display-1 mb-3">❤️🔒</div>
+            </div>
+            <h1 class="display-5 text-danger fw-bold mb-3">This Day is Locked</h1>
+            <p class="lead text-muted mb-4">{{ message }}</p>
+            <div id="countdown" class="alert alert-danger fs-4 fw-bold mb-4"></div>
+            <a href="/home{% if is_admin %}?admin=5238{% endif %}" class="btn btn-danger btn-lg">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="floating-hearts" class="position-fixed top-0 start-0 w-100 h-100 pointer-events-none" style="z-index: 10;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    const unlockDate = new Date('{{ unlock_date.strftime("%Y-%m-%dT%H:%M:%S") }}');
+    const countdownEl = document.getElementById('countdown');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = unlockDate - now;
+      if (diff <= 0) {
+        countdownEl.textContent = 'Unlocked!';
+        countdownEl.className = 'alert alert-success fs-4 fw-bold mb-4';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      countdownEl.textContent = `Opens in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '💔';
+      heart.className = 'position-absolute text-muted fs-3';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animation = 'floatUp 5s ease-in-out forwards';
+      document.getElementById('floating-hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(createHeart, 3000);
+  </script>
+  <style>
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 0.5; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+  </style>
+</body>
+</html>

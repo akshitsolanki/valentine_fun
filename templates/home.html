@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine Week - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="home-body bg-light">
+  <div class="container py-5">
+    <div class="text-center mb-5">
+      <h1 class="display-4 text-danger fw-bold mb-3">💖 Valentine Week 💖</h1>
+      <p class="lead text-muted">A romantic journey of love, one day at a time 🌸</p>
+      <div class="progress mb-4" style="height: 20px;">
+        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ (days | selectattr('unlocked') | list | length / 8 * 100) | round }}%"></div>
+      </div>
+      <p class="text-secondary">Day {{ (days | selectattr('unlocked') | list | length) }} of 8 unlocked</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      {% for day in days %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 {% if not day.unlocked %}opacity-50{% endif %} hover-card">
+          <div class="card-body text-center p-4">
+            <div class="display-1 mb-3">{{ day.emoji }}</div>
+            <h5 class="card-title text-danger fw-bold">{{ day.name }}</h5>
+            {% if not day.unlocked %}
+            <div class="text-muted fs-1">🔒</div>
+            <div class="unlock-countdown small text-muted mt-2" data-unlock="{{ day.unlock_date }}">Opens in --</div>
+            {% else %}
+            <a href="/{{ day.key }}{% if is_admin %}?admin=5238{% endif %}" class="btn btn-danger btn-lg mt-3">Enter ❤️</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="floating-hearts" class="position-fixed top-0 start-0 w-100 h-100 pointer-events-none" style="z-index: 10;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    // Floating hearts animation
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '❤️';
+      heart.className = 'position-absolute fs-1';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animation = 'floatUp 3s ease-in-out forwards';
+      document.getElementById('floating-hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 3000);
+    }
+    setInterval(createHeart, 2000);
+
+    function updateUnlockCountdowns() {
+      const els = document.querySelectorAll('.unlock-countdown');
+      const now = new Date();
+      els.forEach(el => {
+        const target = new Date(el.dataset.unlock);
+        const diff = target - now;
+        if (diff <= 0) {
+          el.textContent = 'Unlocked!';
+          return;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        el.textContent = `Opens in ${days}d ${hours}h ${minutes}m ${seconds}s`;
+      });
+    }
+    updateUnlockCountdowns();
+    setInterval(updateUnlockCountdowns, 1000);
+  </script>
+  <style>
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 1; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
+    }
+    .hover-card:hover { transform: translateY(-5px); transition: 0.3s; }
+  </style>
+</body>
+</html>

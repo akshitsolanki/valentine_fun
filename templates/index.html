@@ -1,80 +1,194 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Perfect 😎 — Valentine</title>
+  <title>Perfect — Valentine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='52'%3E%F0%9F%92%96%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <div id="welcome-overlay" class="welcome-overlay">
     <div class="welcome-content">
       <div class="heart-icon">💖</div>
       <p>I have something to ask you...</p>
-      <button id="open-btn">NEXT</button>
+      <button id="open-btn" class="pill-btn">Next</button>
     </div>
   </div>
+
   <div id="hearts-bg" aria-hidden="true"></div>
   <div id="sparkles-bg" aria-hidden="true"></div>
   <div id="flowers-bg" aria-hidden="true"></div>
-  <div class="container">
-    <div id="video-container" class="video-container">
-      <video id="cat-video" autoplay muted loop playsinline>
-        <source src="{{ url_for('static', filename='cat_pleasing.mp4') }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <h1 id="main-title">💖 Will you be my Valentine? 💖</h1>
-    <p class="subtitle">🌸 You mean the world to me 🌸</p>
-    <div id="crying-message" class="crying-message hidden">"Am I that bad for you?? 😿"</div>
-    <div class="buttons">
-      <button id="yes" class="yes">YES 💍</button>
-      <button id="no" class="no">NO 😢</button>
-    </div>
-    <div id="love-message" class="love-message hidden">
-      <p>💌 My dearest, every moment with you is a treasure. You light up my life like stars in the night sky. I love you endlessly! 💕</p>
-      <div id="heart-quote" class="quote">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</div>
-    </div>
-    <div id="slideshow" class="slideshow hidden">
-      <!-- Slides will be injected by script.js -->
-    </div>
 
-    <div id="extra-features" class="hidden">
-      <button id="show-reasons" class="special-btn">Why I love you... 💖</button>
-      <button id="show-letter" class="special-btn">A Secret Letter 📝</button>
-    </div>
-
-    <div id="reasons-modal" class="modal hidden">
-      <div class="modal-content">
-        <button id="reasons-close" class="modal-close" aria-label="Close">&times;</button>
-        <h2>10 Reasons Why... 💌</h2>
-        <div class="reasons-grid" id="reasons-grid"></div>
+  <nav class="nav">
+    <div class="nav-container">
+      <div class="nav-heart">💗</div>
+      <ul class="nav-links">
+        <li><a href="#story" class="nav-link">Our Story</a></li>
+        <li><a href="#notes" class="nav-link">Love Notes</a></li>
+        <li><a href="#moments" class="nav-link">Moments</a></li>
+        <li><a href="#surprise" class="nav-link">Surprise</a></li>
+        <li><a href="#forever" class="nav-link">Forever</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="sound-toggle" class="icon-btn" aria-label="Toggle sound">🔊</button>
+        <button id="motion-toggle" class="icon-btn" aria-label="Toggle motion">Motion</button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode">🌙</button>
       </div>
     </div>
+  </nav>
 
-    <div id="letter-modal" class="modal hidden">
-      <div class="modal-content">
-        <button id="letter-close" class="modal-close" aria-label="Close">&times;</button>
-        <div class="letter-wrapper">
-          <div class="envelope" id="letter-envelope">
-            <div class="flap"></div>
-            <button id="letter-open-btn" class="letter-open-btn">Click me</button>
-          </div>
+  <section id="story" class="section hero-section">
+    <div class="chapter hero-panel">
+      <div class="hero-eyebrow"><span data-couple></span></div>
+      <h1 id="main-title">Will you be my Valentine?</h1>
+      <p class="subtitle">You are my favorite feeling.</p>
+
+      <div class="hero-media">
+        <div id="video-container" class="video-container">
+          <video id="cat-video" autoplay muted loop playsinline>
+            <source src="{{ url_for('static', filename='cat_pleasing.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
         </div>
-        <div id="letter-text" class="letter-text hidden">
-          <p>To my favorite human,</p>
-          <p>You are the reason my world feels so bright. From the way you talk to the way you make me feel safe, everything about you is perfect to me.</p>
-          <p>I promise to always be by your side, whether we are laughing at silly jokes or walking through hard times. You are my forever Valentine.</p>
-          <p>With all my love, <br> Forever Yours ❤️</p>
+        <div class="hero-badges">
+          <div class="badge">Made with love</div>
+          <div class="badge">For you, always</div>
+          <div class="badge">Forever & Always</div>
         </div>
+      </div>
+
+      <div id="crying-message" class="crying-message hidden">"Am I that bad for you?? 😿"</div>
+
+      <div class="buttons">
+        <button id="yes" class="pill-btn primary">Yes 💍</button>
+        <button id="no" class="pill-btn secondary">No 😢</button>
+      </div>
+
+      <div class="scroll-hint">Scroll for our story</div>
+    </div>
+  </section>
+
+  <section id="notes" class="section notes-section">
+    <div class="chapter">
+      <h2 class="section-title">Love Notes</h2>
+      <p class="section-subtitle">Soft words, saved like petals.</p>
+      <div id="love-message" class="love-message hidden">
+        <p>My dearest, every moment with you is a treasure. You light up my life like stars in the night sky. I love you endlessly! 💕</p>
+        <div id="heart-quote" class="quote">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</div>
+      </div>
+      <div class="notes-grid">
+        <div class="note-card">
+          <div class="note-icon">💌</div>
+          <p>Whenever I’m near you, time softens. Everything feels warmer.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-icon">✨</div>
+          <p>You are the calm in my chaos and the sparkle in my everyday.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-icon">🌸</div>
+          <p>My heart chose you, and it keeps choosing you — again and again.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="moments" class="section moments-section">
+    <div class="chapter">
+      <h2 class="section-title">Special Moments</h2>
+      <p class="section-subtitle">Little scenes that became forever.</p>
+      <div id="slideshow" class="slideshow hidden">
+        <!-- Slides will be injected by script.js -->
+      </div>
+      <div class="moments-grid">
+        <div class="moment-card">
+          <div class="moment-icon">📸</div>
+          <p>That smile you gave me — I keep it like a secret.</p>
+        </div>
+        <div class="moment-card">
+          <div class="moment-icon">🎀</div>
+          <p>Every silly memory turns golden with you.</p>
+        </div>
+        <div class="moment-card">
+          <div class="moment-icon">🌙</div>
+          <p>Our late night talks are my favorite lullabies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="surprise" class="section surprise-section">
+    <div class="chapter">
+      <h2 class="section-title">Surprise</h2>
+      <p class="section-subtitle">A little magic, just for you.</p>
+      <div id="extra-features" class="hidden feature-row">
+        <button id="show-reasons" class="pill-btn ghost">Why I love you 💖</button>
+        <button id="show-letter" class="pill-btn ghost">A Secret Letter 📝</button>
+      </div>
+      <div class="surprise-card">
+        <div class="surprise-icon">💫</div>
+        <p class="surprise-text">Tap for a new love line</p>
+        <button id="quote-btn" class="pill-btn primary">Generate a Love Quote</button>
+        <div id="quote-output" class="quote-output">You are my favorite feeling.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="forever" class="section forever-section">
+    <div class="chapter">
+      <h2 class="section-title">Forever</h2>
+      <p class="section-subtitle">The last chapter is always you.</p>
+      <div class="forever-message">
+        <p>Made with love, held with care, saved for you.</p>
+        <p class="signature">Forever & Always</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="reasons-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="reasons-close" class="modal-close" aria-label="Close">&times;</button>
+      <h2>10 Reasons Why... 💌</h2>
+      <div class="reasons-grid" id="reasons-grid"></div>
+    </div>
+  </div>
+
+  <div id="letter-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="letter-close" class="modal-close" aria-label="Close">&times;</button>
+      <div class="letter-wrapper">
+        <div class="envelope" id="letter-envelope">
+          <div class="flap"></div>
+          <button id="letter-open-btn" class="letter-open-btn">Open</button>
+        </div>
+      </div>
+      <div id="letter-text" class="letter-text hidden">
+        <p>To my favorite human,</p>
+        <p>You are the reason my world feels so bright. From the way you talk to the way you make me feel safe, everything about you is perfect to me.</p>
+        <p>I promise to always be by your side, whether we are laughing at silly jokes or walking through hard times. You are my forever Valentine.</p>
+        <p>With all my love, <br> Forever Yours ❤️</p>
       </div>
     </div>
   </div>
+
   <audio id="bg-music" src="{{ url_for('static', filename='main.mp3') }}" loop autoplay></audio>
   <div id="confetti" aria-hidden="true"></div>
-  <div id="cursor-trail-container"></div>
+  <div id="easter-egg" class="easter-egg" aria-hidden="true">💖</div>
+  <div id="secret-message" class="secret-message hidden">
+    <p>You found my secret! 💕</p>
+    <p>"Every moment with you is a treasure I hold dear."</p>
+  </div>
+
   <script>
     window.APP_CONFIG = {
+      names: {
+        a: "{{ person_a }}",
+        b: "{{ person_b }}"
+      },
       api: {
         sendAgreement: "{{ url_for('send_agreement') }}"
       },

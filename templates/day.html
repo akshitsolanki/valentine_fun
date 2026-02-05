@@ -1,0 +1,367 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ name }} - Valentine Week</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="day-page day-{{ day }}">
+  <div class="day-bg" aria-hidden="true"></div>
+  <div class="day-spotlight" aria-hidden="true"></div>
+  <div id="day-fx" class="day-fx" aria-hidden="true"></div>
+
+  <main class="day-shell">
+    <header class="day-hero">
+      <div class="day-hero-text">
+        <div class="day-badge">{{ emoji }} {{ name }} {{ emoji }}</div>
+        <h1 class="day-title">A little chapter for you</h1>
+        <p class="day-subtitle">Today feels softer because it’s you.</p>
+        <div class="day-actions">
+          <a href="/home{% if is_admin %}?admin=5238{% endif %}" class="day-back">Back to Home</a>
+        </div>
+      </div>
+      <div class="day-hero-media">
+        <div class="day-slider" data-slider>
+          {% for img in images %}
+          <img src="{{ url_for('images_file', filename=img) }}" alt="{{ name }} memory {{ loop.index }}" class="day-slide{% if loop.first %} active{% endif %}">
+          {% endfor %}
+          <div class="day-caption">{{ name }} — captured with love</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="day-grid">
+      <article class="day-card deluxe love-card">
+        <h2 class="day-card-title">Love Letter</h2>
+        <div class="day-poem">
+          {% if day == 'rose' %}
+          <p>In gardens of dreams, where roses softly bloom,<br>
+          I found a flower that chased away my gloom.<br>
+          With petals so red, like the love in your eyes,<br>
+          You are my rose, my eternal surprise.<br>
+          Each thorn reminds me of challenges we've faced,<br>
+          But your beauty makes every struggle erased.</p>
+          {% elif day == 'propose' %}
+          <p>Under starry skies, where wishes take flight,<br>
+          I kneel before you, my heart's pure delight.<br>
+          Will you be mine, in joy and in sorrow,<br>
+          Together forever, from now until tomorrow?<br>
+          Your smile lights my world, your touch sets me free,<br>
+          Say yes, my love, and complete you and me.</p>
+          {% elif day == 'chocolate' %}
+          <p>Sweet as the finest chocolate, rich and divine,<br>
+          Your love melts my heart, makes everything shine.<br>
+          In every bite, I taste your gentle grace,<br>
+          Wrapped in your warmth, in this loving embrace.<br>
+          Like cocoa beans grown in tropical sun,
+          You are my sweetness, my only one.</p>
+          {% elif day == 'teddy' %}
+          <p>Soft as a teddy, with eyes full of care,<br>
+          You hold me close, banishing despair.<br>
+          In your arms, I find my safest place,
+          A cuddly haven, filled with your grace.<br>
+          Like a cherished bear, you comfort and soothe,
+          My teddy bear love, forever my truth.</p>
+          {% elif day == 'promise' %}
+          <p>With hands held tight, and hearts beating as one,
+          I promise you forever, until the setting sun.<br>
+          Through storms and sunshine, I'll stand by your side,
+          My word is my bond, in you I confide.<br>
+          Eternal commitment, in sickness and health,
+          You are my promise, my infinite wealth.</p>
+          {% elif day == 'hug' %}
+          <p>Wrapped in your arms, where worries dissolve,
+          Your hugs are my haven, my problems resolve.<br>
+          Warmth of your touch, like a blanket so fine,
+          In your embrace, everything feels divine.<br>
+          Each squeeze whispers love, in a language so true,
+          My hug day darling, I cherish you.</p>
+          {% elif day == 'kiss' %}
+          <p>Lips softly meeting, in a dance so divine,
+          Your kiss is my nectar, my sweetest wine.<br>
+          Sparks fly like fireworks, in the night sky so grand,
+          With every touch, I understand.<br>
+          Passion ignited, in this tender art,
+          You are my kiss, my beating heart.</p>
+          {% elif day == 'valentine' %}
+          <p>On this day of hearts, when love fills the air,
+          I celebrate you, beyond compare.<br>
+          My Valentine forever, my joy and my light,
+          In your love, everything feels right.<br>
+          Through all the years, my love will remain,
+          Happy Valentine's, my eternal flame.</p>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="day-card mood-card">
+        <h2 class="day-card-title">Today’s Mood</h2>
+        <p class="day-mood">“{{ quotes | random }}”</p>
+        <div class="day-tags">
+          {% if day == 'rose' %}
+          <span class="tag">Petals</span>
+          <span class="tag">Blush</span>
+          <span class="tag">Warmth</span>
+          {% elif day == 'propose' %}
+          <span class="tag">Starlight</span>
+          <span class="tag">Promise</span>
+          <span class="tag">Forever</span>
+          {% elif day == 'chocolate' %}
+          <span class="tag">Cocoa</span>
+          <span class="tag">Sweet</span>
+          <span class="tag">Velvet</span>
+          {% elif day == 'teddy' %}
+          <span class="tag">Cozy</span>
+          <span class="tag">Soft</span>
+          <span class="tag">Cuddle</span>
+          {% elif day == 'promise' %}
+          <span class="tag">Gold</span>
+          <span class="tag">Trust</span>
+          <span class="tag">Bloom</span>
+          {% elif day == 'hug' %}
+          <span class="tag">Warm</span>
+          <span class="tag">Safe</span>
+          <span class="tag">Hold</span>
+          {% elif day == 'kiss' %}
+          <span class="tag">Spark</span>
+          <span class="tag">Glow</span>
+          <span class="tag">Sway</span>
+          {% elif day == 'valentine' %}
+          <span class="tag">Finale</span>
+          <span class="tag">Fireworks</span>
+          <span class="tag">Us</span>
+          {% endif %}
+        </div>
+      </article>
+
+
+      <article class="day-card distance-card">
+        <h2 class="day-card-title">Love Notes</h2>
+        <div class="distance-lines">
+          {% if day == 'rose' %}
+          <span>“A rose for you, carried by my words.”</span>
+          {% elif day == 'propose' %}
+          <span>“Will you be mine, across every timezone?”</span>
+          {% elif day == 'chocolate' %}
+          <span>“Sweet notes, sweeter than chocolate.”</span>
+          {% elif day == 'teddy' %}
+          <span>“Soft hugs sent through the screen.”</span>
+          {% elif day == 'promise' %}
+          <span>“I promise to keep choosing you.”</span>
+          {% elif day == 'hug' %}
+          <span>“A hug in every ‘good morning.’”</span>
+          {% elif day == 'kiss' %}
+          <span>“A kiss in every ‘good night.’”</span>
+          {% elif day == 'valentine' %}
+          <span>“Love travels faster than distance.”</span>
+          {% endif %}
+        </div>
+      </article>
+
+      <article class="day-card countdown-card">
+        <h2 class="day-card-title">Countdown to Meet</h2>
+        <p class="countdown-date">Meeting on Feb 26, 2026</p>
+        <div id="meet-countdown" class="countdown-grid">
+          <div><strong>--</strong><span>Days</span></div>
+          <div><strong>--</strong><span>Hours</span></div>
+          <div><strong>--</strong><span>Minutes</span></div>
+          <div><strong>--</strong><span>Seconds</span></div>
+        </div>
+      </article>
+
+      <article class="day-card day-surprise surprise-card">
+        <h2 class="day-card-title">Tiny Surprise</h2>
+        {% if day == 'rose' %}
+        <p>Pick a rose to see what it whispers.</p>
+        <button class="day-trigger" data-reveal="rose">Pick a Rose</button>
+        <div class="day-reveal" data-reveal-target="rose">You are the flower my heart kept searching for.</div>
+        {% elif day == 'propose' %}
+        <p>Open the ring box.</p>
+        <button class="day-trigger" data-reveal="propose">Open the Box</button>
+        <div class="day-reveal" data-reveal-target="propose">Say yes, and let’s write forever together.</div>
+        {% elif day == 'chocolate' %}
+        <p>Unwrap the chocolate.</p>
+        <button class="day-trigger" data-reveal="chocolate">Unwrap</button>
+        <div class="day-reveal" data-reveal-target="chocolate">Sweet like you, soft like us.</div>
+        {% elif day == 'teddy' %}
+        <p>Tap the teddy’s heart.</p>
+        <button class="day-trigger" data-reveal="teddy">Tap Heart</button>
+        <div class="day-reveal" data-reveal-target="teddy">A cuddle from me, anytime you want.</div>
+        {% elif day == 'promise' %}
+        <p>Sign our promise.</p>
+        <button class="day-trigger" data-reveal="promise">Seal Promise</button>
+        <div class="day-reveal" data-reveal-target="promise">I’ll choose you, every single day.</div>
+        {% elif day == 'hug' %}
+        <p>Hold for a hug.</p>
+        <button class="day-trigger" data-reveal="hug">Hold Me</button>
+        <div class="day-reveal" data-reveal-target="hug">Here’s a warm hug, wrapped in words.</div>
+        {% elif day == 'kiss' %}
+        <p>Steal a kiss.</p>
+        <button class="day-trigger" data-reveal="kiss">Steal</button>
+        <div class="day-reveal" data-reveal-target="kiss">A kiss for your forehead, soft and safe.</div>
+        {% elif day == 'valentine' %}
+        <p>Pop the finale.</p>
+        <button class="day-trigger" data-reveal="valentine">Celebrate</button>
+        <div class="day-reveal" data-reveal-target="valentine">You’re my forever favorite. Happy Valentine’s.</div>
+        {% endif %}
+      </article>
+
+      <article class="day-card secret-card secret-card-block">
+        <h2 class="day-card-title">Secret Note</h2>
+        <p class="secret-hint">Tap to reveal what I never say out loud.</p>
+        <button class="day-trigger secret-trigger" data-reveal="secret">Reveal</button>
+        <div class="day-reveal" data-reveal-target="secret">
+          {% if day == 'rose' %}You make even ordinary days feel soft and romantic.{% endif %}
+          {% if day == 'propose' %}I would choose you in every lifetime, without hesitation.{% endif %}
+          {% if day == 'chocolate' %}You are my comfort, my sweetness, my calm.{% endif %}
+          {% if day == 'teddy' %}You feel like home — warm, safe, and gentle.{% endif %}
+          {% if day == 'promise' %}I promise to keep showing up for you, always.{% endif %}
+          {% if day == 'hug' %}I feel safest when I’m close to you.{% endif %}
+          {% if day == 'kiss' %}Your smile stays with me long after we part.{% endif %}
+          {% if day == 'valentine' %}You are my favorite story, and my forever.{% endif %}
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <div id="floating-hearts" class="floating-layer" aria-hidden="true"></div>
+  <audio id="day-music" src="{{ url_for('static', filename='music/' + (day if day != 'valentine' else 'valentines') + '_day.mp3') }}" loop autoplay></audio>
+
+  <script>
+    const dayKey = '{{ day }}';
+    const fxRoot = document.getElementById('day-fx');
+    const meetDate = new Date('2026-02-26T00:00:00');
+
+    const music = document.getElementById('day-music');
+    if (music) {
+      music.play().catch(() => {
+        const resumeOnClick = () => {
+          music.play().catch(() => {});
+          document.removeEventListener('click', resumeOnClick);
+        };
+        document.addEventListener('click', resumeOnClick);
+      });
+    }
+
+    const playTone = (type) => {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = ctx.currentTime;
+        const o1 = ctx.createOscillator();
+        const g = ctx.createGain();
+        const presets = {
+          rose: 330,
+          propose: 440,
+          chocolate: 280,
+          teddy: 300,
+          promise: 392,
+          hug: 320,
+          kiss: 520,
+          valentine: 660
+        };
+        o1.type = 'sine';
+        o1.frequency.value = presets[type] || 440;
+        g.gain.setValueAtTime(0.0001, now);
+        g.gain.exponentialRampToValueAtTime(0.09, now + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
+        o1.connect(g);
+        g.connect(ctx.destination);
+        o1.start(now);
+        o1.stop(now + 0.55);
+        setTimeout(() => ctx.close(), 700);
+      } catch (e) {}
+    };
+
+    const triggers = document.querySelectorAll('.day-trigger');
+    triggers.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-reveal');
+        const target = document.querySelector(`[data-reveal-target="${key}"]`);
+        if (target) {
+          target.classList.toggle('show');
+          playTone(dayKey);
+          if (dayKey === 'valentine' && key === 'valentine') {
+            for (let i = 0; i < 10; i++) {
+              setTimeout(() => spawnFx('🎉', 'fx-fire'), i * 80);
+            }
+          }
+        }
+      });
+    });
+
+    const spawnFx = (icon, className) => {
+      if (!fxRoot) return;
+      const el = document.createElement('div');
+      el.className = `fx-item ${className}`;
+      el.textContent = icon;
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (4 + Math.random() * 4) + 's';
+      fxRoot.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    };
+
+    const fxMap = {
+      rose: { icon: '🌹', className: 'fx-petal' },
+      propose: { icon: '✨', className: 'fx-star' },
+      chocolate: { icon: '🍫', className: 'fx-drop' },
+      teddy: { icon: '🧸', className: 'fx-float' },
+      promise: { icon: '💍', className: 'fx-gold' },
+      hug: { icon: '🤍', className: 'fx-soft' },
+      kiss: { icon: '💋', className: 'fx-spark' },
+      valentine: { icon: '🎆', className: 'fx-fire' }
+    };
+
+    const fxConfig = fxMap[dayKey];
+    if (fxConfig) {
+      setInterval(() => spawnFx(fxConfig.icon, fxConfig.className), 1200);
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.innerHTML = '💖';
+      heart.className = 'floating-heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.getElementById('floating-hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 1500);
+
+    const slides = document.querySelectorAll('.day-slide');
+    if (slides.length > 1) {
+      let current = 0;
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3200);
+    }
+
+    const countdownEl = document.getElementById('meet-countdown');
+    if (countdownEl) {
+      const updateCountdown = () => {
+        const now = new Date();
+        const diff = meetDate - now;
+        if (diff <= 0) {
+          countdownEl.innerHTML = '<div><strong>0</strong><span>Days</span></div><div><strong>0</strong><span>Hours</span></div><div><strong>0</strong><span>Minutes</span></div><div><strong>0</strong><span>Seconds</span></div>';
+          return;
+        }
+        const totalSeconds = Math.floor(diff / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        countdownEl.innerHTML = `
+          <div><strong>${days}</strong><span>Days</span></div>
+          <div><strong>${hours}</strong><span>Hours</span></div>
+          <div><strong>${minutes}</strong><span>Minutes</span></div>
+          <div><strong>${seconds}</strong><span>Seconds</span></div>
+        `;
+      };
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    }
+  </script>
+</body>
+</html>
